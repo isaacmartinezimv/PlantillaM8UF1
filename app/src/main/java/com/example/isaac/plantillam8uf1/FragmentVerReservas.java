@@ -3,10 +3,22 @@ package com.example.isaac.plantillam8uf1;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 
 /**
@@ -27,20 +39,26 @@ public class FragmentVerReservas extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    //variables de elementos en pantalla
+    ProgressBar spinner;
+    RecyclerView recyclerView;
+
+    //Variables de datos obtenidos de firebase
+    ArrayList<HacerReservaModel> listaReservas;
+
+    //variables de firebase
+    FirebaseDatabase firebaseDatabase;
+
+    //Variables para la recyclerView
+    ReservasAdapter adapter;
+
+
     private OnFragmentInteractionListener mListener;
 
     public FragmentVerReservas() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentVerReservas.
-     */
     // TODO: Rename and change types and number of parameters
     public static FragmentVerReservas newInstance(String param1, String param2) {
         FragmentVerReservas fragment = new FragmentVerReservas();
@@ -63,8 +81,72 @@ public class FragmentVerReservas extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ver_reservas, container, false);
+        View view = inflater.inflate(R.layout.fragment_ver_reservas, container, false);
+
+        //Creamos un array vacio asociado a listaReservas
+        listaReservas = new ArrayList<>();
+
+        //Asociamos los elementos de la vista con sus IDs
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerID);
+        spinner = (ProgressBar) view.findViewById(R.id.progressBar1);
+
+        //Nada mas iniciar la vista nos interesa que el spinner se vea
+        spinner.setVisibility(View.VISIBLE);
+
+        //Configuramos la recyclerView añadiendole el layout manager
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        //Creamos un adapter del tipo que hemos creado anteriormente y le pasamos la lista de reservas.
+        //Este adapter que creamos se lo asignamos a nuestra recycler view
+        adapter = new ReservasAdapter(listaReservas);
+        recyclerView.setAdapter(adapter);
+
+        //Obtener los datos del realTime DB, creamos una instancia de la database y obtenemos
+        //la referencia de los hijos del elemento root, que en nuestro caso es reservas
+        firebaseDatabase = FirebaseDatabase.getInstance();
+
+        //Añadimos un event listener que contemple si se han añadido nuevos elementos
+        firebaseDatabase.getReference().child("reservas").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                //Declaramos un objeto de tipo HacerReservasModel con el que vamos a interpretar los datos
+                HacerReservaModel reserva;
+
+                //Parseamos los datos con el modelo que hemos creado
+                reserva = dataSnapshot.getValue(HacerReservaModel.class);
+
+                //Una vez tenemos los datos interpretados en un objeto tipo HacerReservaModel, lo añadimos a la listaReservas
+                listaReservas.add(reserva);
+
+                //Notificamos al adapter el cambio y seteamos el spiner en invisible
+                adapter.notifyDataSetChanged();
+                spinner.setVisibility(View.GONE);
+            }
+
+
+            //Metodos restantes de la recycler, no interesan de momento.
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
