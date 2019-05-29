@@ -80,6 +80,7 @@
             android:layout_marginRight="25dp"
             android:text="Telefono:"/>
         <EditText
+            android:id="@+id/editTelefonoID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Telefono"
