@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menuPlatosID"
+    android:title="Ver platos"
+    android:icon="@drawable/ic_restaurant_menu_black_24dp"
+    app:showAsAction="always" /> <!-- Esto hace que se muestre siempre -->
+
+    <item android:id="@+id/menuHacerReservaID"
+        android:title="Hacer reserva"
+        android:icon="@drawable/ic_add_black_24dp"
+        app:showAsAction="always" />
+
+    <item android:id="@+id/menuVerReservaID"
+        android:title="Ver reservas"
+        android:icon="@drawable/ic_assignment_black_24dp"
+        app:showAsAction="always" />
+
+    <!-- Si en vez de always ponermos neve, haría que se muestre dentro del icono de los tres puntitos -->
+
+
+</menu>
