@@ -5,18 +5,19 @@
     android:layout_height="match_parent"
     tools:context=".FragmentVerReservas">
 
-   <!-- <android.support.v7.widget.RecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerID"
         android:layout_margin="10pt"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>
--->
+
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:layout_centerHorizontal="true"/>
 </FrameLayout>
