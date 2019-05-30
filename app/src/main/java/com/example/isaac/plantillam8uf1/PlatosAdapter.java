@@ -22,7 +22,7 @@ public class PlatosAdapter extends RecyclerView.Adapter<PlatosAdapter.ViewHolder
     @NonNull
     @Override
     public PlatosAdapter.ViewHolderPlatos onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.reserva_item, null, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.plato_item, null, false);
         return new ViewHolderPlatos(view);
     }
 
