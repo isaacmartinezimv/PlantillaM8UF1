@@ -53,6 +53,9 @@ public class FragmentVerReservas extends Fragment {
     ReservasAdapter adapter;
 
 
+    //Elemento raiz de la base de datos
+    String databasePath = "reservas";
+
     private OnFragmentInteractionListener mListener;
 
     public FragmentVerReservas() {
@@ -106,7 +109,7 @@ public class FragmentVerReservas extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         //Añadimos un event listener que contemple si se han añadido nuevos elementos
-        firebaseDatabase.getReference().child("reservas").addChildEventListener(new ChildEventListener() {
+        firebaseDatabase.getReference().child(databasePath).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 //Declaramos un objeto de tipo HacerReservasModel con el que vamos a interpretar los datos

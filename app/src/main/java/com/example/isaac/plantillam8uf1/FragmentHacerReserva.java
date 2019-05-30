@@ -16,14 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FragmentHacerReserva.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FragmentHacerReserva#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FragmentHacerReserva extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
